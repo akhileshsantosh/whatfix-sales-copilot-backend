@@ -35,7 +35,7 @@ ACCESS_TOKEN, INSTANCE_URL = authenticate_salesforce()
 # Get Sales Profile Users
 @app.get("/users")
 def get_users():
-    query = "SELECT Id, Name FROM User WHERE Profile.Name = 'Sales Profile'"
+    query = "SELECT Id, Name FROM User WHERE Profile.Name = 'Account Executive'"
     query_url = f"{INSTANCE_URL}/services/data/v60.0/query/?q={query}"
     headers = {"Authorization": f"Bearer {ACCESS_TOKEN}", "Content-Type": "application/json"}
     response = requests.get(query_url, headers=headers)
