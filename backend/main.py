@@ -1,4 +1,4 @@
-from fastapi import FastAPI, Query
+from fastapi import FastAPI
 import requests
 import openai
 import os
@@ -69,13 +69,13 @@ def summarize_opportunity(opportunity_id: str):
     Close Date: {opportunity[0]['CloseDate']}
     """
 
-    openai.api_key = OPENAI_API_KEY
+    client = openai.OpenAI(api_key=OPENAI_API_KEY)
+
     prompt = f"Summarize this sales opportunity:\n{data_for_ai}"
     
-    ai_response = openai.ChatCompletion.create(
+    ai_response = client.chat.completions.create(
         model="gpt-4",
         messages=[{"role": "user", "content": prompt}]
     )
     
-    return {"summary": ai_response['choices'][0]['message']['content']}
-
+    return {"summary": ai_response.choices[0].message.content}
